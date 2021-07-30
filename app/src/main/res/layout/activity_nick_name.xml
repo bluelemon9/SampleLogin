@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+    어떠한데이터를바인딩할래?
+    data태그안에선언
+    -->
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.milkyway.samplelogin.NickNameViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".NickNameActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Milky Way"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!--
+        viewmodel에있는nickname을바인딩
+        android:text="@={viewModel.nickname}"
+        뷰모델에있는nickname값이edittext에적용
+        edittext에서입력하는값이뷰모델에있는nickname값에적용
+        -->
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:text="@={viewModel.nickname}"
+            android:maxLength="10"
+            android:singleLine="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!--
+        viewmodel에있는함수를바인딩
+        android:onClick="@{()->viewModel.sameCheck()}"
+        원래뷰에서했었던setOnClickListener생각하면편할듯
+        -->
+        <Button
+            android:id="@+id/btn_nickname_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중복 확인"
+            android:onClick="@{()->viewModel.sameCheck()}"
+            android:visibility="@{viewModel.isValid? View.INVISIBLE : View.VISIBLE}"
+            android:background="#777777"
+            app:layout_constraintTop_toTopOf="@id/et_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+            app:layout_constraintEnd_toEndOf="@id/et_nickname" />
+
+        <!--
+        viewmodel에있는값을참조하여
+        visibility를레이아웃에서조정할수있다
+        삼항연산자사용용
+       -->
+        <ImageView
+            android:id="@+id/img_check_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_24"
+            android:visibility="@{viewModel.isValid? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="@id/et_nickname"
+            app:layout_constraintBottom_toBottomOf="@id/et_nickname"
+            app:layout_constraintStart_toStartOf="@id/btn_nickname_check"
+            app:layout_constraintEnd_toEndOf="@id/btn_nickname_check"/>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="밀키웨이시작하기"
+            android:background="#777777"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
